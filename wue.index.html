@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สุขสันต์วันครบรอบ! 🩷</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Mali:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS STYLES INLINE --- */
+        body {
+            font-family: 'Mali', cursive;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #ffe4e1; /* Pale Pink (ชมพูอ่อนมาก) */
+            color: #ff69b4; /* Deep Pink (ชมพูเข้ม) */
+            overflow: hidden; 
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* --- Login Screen Styling --- */
+        #login-screen {
+            text-align: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 10px 20px rgba(255, 105, 180, 0.4);
+            border: 5px solid #ff69b4;
+        }
+
+        .login-box h1 {
+            color: #ff1493; /* Deeper pink */
+            font-size: 2.5em;
+        }
+        
+        #username {
+            display: none;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 15px;
+            margin: 15px 0;
+            box-sizing: border-box;
+            border: 3px solid #ffb6c1;
+            border-radius: 10px;
+            background-color: #fff0f5;
+            text-align: center;
+            font-size: 1.5em;
+            transition: border-color 0.3s;
+        }
+
+        input[type="password"]:focus {
+            border-color: #ff69b4;
+            outline: none;
+        }
+
+        button {
+            background-color: #ff69b4;
+            color: white;
+            padding: 16px 25px;
+            margin: 20px 0 10px 0; 
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 1.5em;
+            transition: background-color 0.3s, transform 0.1s;
+        }
+
+        button:hover {
+            background-color: #ff1493;
+            transform: scale(1.05);
+        }
+
+        .error-text {
+            color: red;
+            margin-top: 10px;
+            font-weight: bold;
+        }
+
+        /* --- Anniversary Content Styling --- */
+        #anniversary-content {
+            text-align: center;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .main-title {
+            font-size: 4em;
+            margin-bottom: 30px; 
+            text-shadow: 2px 2px #fff;
+            animation: pulse 1.5s infinite alternate;
+        }
+        
+        #gift-button {
+            background-color: #ff1493; 
+            color: white;
+            padding: 15px 25px;
+            margin-top: 30px;
+            font-size: 1.5em;
+            border-radius: 30px;
+            width: auto;
+            display: inline-block;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative; 
+            z-index: 20; 
+        }
+
+        #gift-button.shake {
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+
+        #countdown-display {
+            font-size: 6em;
+            font-weight: bold;
+            color: #ff1493;
+            margin-top: 50px;
+            text-shadow: 3px 3px #fff;
+            position: absolute; 
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100; 
+        }
+
+        #final-message {
+            font-size: 3em;
+            font-weight: bold;
+            color: #ff1493;
+            text-shadow: 2px 2px #fff;
+            margin-top: 50px;
+            position: relative;
+            z-index: 100;
+        }
+
+        /* --- Falling Element Styling --- */
+        .falling-element {
+            position: absolute;
+            top: -5vh; 
+            font-size: 20px; 
+            color: #ff69b4; 
+            opacity: 0.8;
+            transform: rotate(0deg);
+            animation: fall linear infinite;
+            z-index: 1; 
+            white-space: nowrap; 
+        }
+        
+        .falling-element.message {
+            color: #ff1493; 
+            font-size: 1.5em; 
+            font-weight: bold;
+        }
+
+        .burst-heart {
+            position: absolute;
+            font-size: 40px; 
+            animation: burstFadeOut 2s forwards; 
+            z-index: 50; 
+            opacity: 1;
+        }
+
+        /* Keyframe Animations */
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(5deg);
+            }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.05); }
+        }
+
+        @keyframes burstFadeOut {
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.5); opacity: 1; }
+            100% { transform: scale(2.5); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="login-screen">
+        <div class="login-box">
+            <h1>ยินดีต้อนรับสู่ประตูหัวจาย 🩷</h1>
+            <p style="font-size: 1.2em;">กรุณากรอกรหัสลับเพื่อเข้าสู่หัวใจ</p>
+            <form id="login-form">
+                <input type="password" id="password" placeholder="รหัสลับ" required>
+                <button type="submit">เปิดประตู</button>
+                <p id="error-message" class="error-text"></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="anniversary-content" class="hidden">
+        <h1 class="main-title" id="main-anniversary-title">สุขสันต์วันครบรอบนะคะเด็กน้อย 🩷</h1>
+        
+        <button id="gift-button">กดปุ่มนี้เพื่อรับของขวัญ !!</button>
+        <div id="countdown-display" class="hidden"></div>
+        <div id="final-message" class="hidden"></div>
+    </div>
+
+    <script>
+        const CORRECT_PASSWORD = '17071707';
+        // เพิ่มอีโมจิหัวใจทุกสีที่ต้องการสำหรับส่วนระเบิด
+        const burstHeartEmojis = ['❤️', '🧡', '💛', '💚', '💙', '💜', '🤍', '🩷', '🩵']; 
+
+        document.getElementById('login-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const passwordInput = document.getElementById('password').value;
+            const errorMessage = document.getElementById('error-message');
+
+            if (passwordInput === CORRECT_PASSWORD) {
+                document.getElementById('login-screen').classList.add('hidden');
+                document.getElementById('anniversary-content').classList.remove('hidden');
+                startAnniversaryEffect();
+            } else {
+                errorMessage.textContent = 'นี่หนูกรอกผิดได้ไง!!!! กรอกให้ถูกเลยนะคะ 😤'; 
+                setTimeout(() => {
+                    errorMessage.textContent = '';
+                }, 4000);
+            }
+        });
+
+        document.getElementById('gift-button').addEventListener('click', function() {
+            const giftButton = this;
+            const confirmGift = confirm("คุณแน่ใจที่จะกดมั้ย?");
+
+            if (confirmGift) {
+                giftButton.classList.add('hidden'); 
+                startCountdown(5);
+            } else {
+                giftButton.textContent = "ไม่สามารถกดได้นะคะ 🥺";
+                giftButton.classList.add('shake');
+                setTimeout(() => {
+                    giftButton.textContent = "กดปุ่มนี้เพื่อรับของขวัญ !!"; 
+                    giftButton.classList.remove('shake');
+                }, 3000);
+            }
+        });
+
+        function startCountdown(seconds) {
+            const countdownDisplay = document.getElementById('countdown-display');
+            countdownDisplay.classList.remove('hidden');
+            document.getElementById('main-anniversary-title').classList.add('hidden'); 
+
+            let counter = seconds;
+            countdownDisplay.textContent = counter;
+
+            const countdownInterval = setInterval(() => {
+                counter--;
+                countdownDisplay.textContent = counter;
+
+                if (counter <= 0) {
+                    clearInterval(countdownInterval);
+                    countdownDisplay.classList.add('hidden');
+                    burstHeartsEffect(); 
+                }
+            }, 1000);
+        }
+
+        function burstHeartsEffect() {
+            const container = document.body;
+            const burstDuration = 7000; // 7 วินาที
+
+            let burstInterval;
+
+            const createBurstHeart = () => {
+                const heart = document.createElement('div');
+                heart.classList.add('burst-heart');
+                // สุ่มเลือกอีโมจิหัวใจจาก array burstHeartEmojis
+                heart.textContent = burstHeartEmojis[Math.floor(Math.random() * burstHeartEmojis.length)]; 
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.top = Math.random() * 100 + 'vh';
+                // ไม่ต้องตั้งค่า heart.style.color เพราะอีโมจิมีสีของตัวเองอยู่แล้ว
+                heart.style.animationDuration = Math.random() * 1 + 1 + 's'; 
+                
+                container.appendChild(heart);
+
+                setTimeout(() => {
+                    if (heart.parentNode) {
+                        heart.remove();
+                    }
+                }, parseFloat(heart.style.animationDuration) * 1000 + 100);
+            };
+
+            burstInterval = setInterval(() => {
+                for (let i = 0; i < 30; i++) { 
+                    createBurstHeart();
+                }
+            }, 100); 
+
+            setTimeout(() => {
+                clearInterval(burstInterval);
+                displayFinalMessage();
+            }, burstDuration);
+        }
+
+        function displayFinalMessage() {
+            const finalMessage = document.getElementById('final-message');
+            finalMessage.textContent = 'ขอบคุณที่ดูจนจบและขอบคุณที่อยู่ด้วยกันมาตลอดนะคะ รักที่สุดเลยน้า 💖';
+            finalMessage.classList.remove('hidden');
+        }
+
+        function startAnniversaryEffect() {
+            const container = document.body;
+            const heartSymbols = ['💖', '💕', '💗', '💓', '💘', '❤️', '🩷', '🧡', '💛', '💚', '💙', '💜', '🤍', '🩵']; // เพิ่มสีหัวใจปกติด้วย
+            const loveMessages = [
+                "สุขสันต์วันครบรอบนะคะ",
+                "พี่รักเธอมากเลยคนเก่ง",
+                "เด็กน้อยของพี่ยิ่งโตยิ่งน่ารัก",
+                "อยู่ด้วยกันไปนานๆเลยน้า",
+                "กำลังจะเข้าปีที่3 แปลกใจทำไมยังน่ารัก",
+                "รักที่สุด",
+                "รักม้ากก ไออ้วน"
+            ];
+
+            function createFallingElement(isMessage = false) {
+                const element = document.createElement('div');
+                element.classList.add('falling-element');
+
+                if (isMessage) {
+                    element.classList.add('message');
+                    element.textContent = loveMessages[Math.floor(Math.random() * loveMessages.length)];
+                    element.style.color = '#ff1493'; 
+                } else {
+                    element.textContent = heartSymbols[Math.floor(Math.random() * heartSymbols.length)];
+                }
+
+                element.style.left = Math.random() * 100 + 'vw';
+                element.style.fontSize = Math.random() * 20 + (isMessage ? 25 : 15) + 'px'; 
+                element.style.animationDuration = Math.random() * 8 + 5 + 's'; 
+                element.style.opacity = Math.random() * 0.7 + 0.3;
+
+                container.appendChild(element);
+
+                setTimeout(() => {
+                    if(element.parentNode) {
+                        element.remove();
+                    }
+                }, parseFloat(element.style.animationDuration) * 1000 + 500); 
+            }
+
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => createFallingElement(false), Math.random() * 5000); 
+            }
+
+            setInterval(() => createFallingElement(false), 200); 
+            setInterval(() => createFallingElement(true), 1500); 
+        }
+    </script>
+</body>
+</html>
